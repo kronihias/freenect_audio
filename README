@@ -1,0 +1,64 @@
+
+freenect_audio (0.1)
+======================================
+pure data external to output 4 microphone signals from Kinect sensor via libfreenect.
+outputs samples as four separate lists of floats when sending bang message to freenect_audio.
+
+* depends on libfreenect (v0.1 !!)
+
+Tested with 1 Kinects, but should work with multiple.
+
+
+(C) 2011/2012 by Matthias Kronlachner
+__________________________________________________________
+
+::INSTALL::
+tested and compiled for Ubuntu 11.10 and MacOS 10.6.8
+
+use binaries from build folder or build yourself
+OSX: make sure that libfreenect.0.0.1.dylib and libusb-1.0.0.dylib provided in build folder are in the same folder than freenect.pd_darwin!
+
+*	get/install pd including src (http://puredata.info)
+
+*	get and install latest libfreenect from https://github.com/OpenKinect/libfreenect
+
+help with compiling:
+	#...> git clone https://github.com/OpenKinect/libfreenect.git
+	#...> cd libfreenect
+	#.../libfreenect> mkdir build
+	#.../libfreenect> cd build
+	#.../libfreenect/build> ccmake ../
+	--> choose BUILD_AUDIO   ON
+	--> choose BUILD_EXAMPLES   OFF     (ON only if you have GLUT)
+	CMAKE_OSX_ARCHITECTURES  i386;x86_64
+	press [c] (configure), [g] generate, [q] exit
+	
+	#.../libfreenect/build> cmake ../
+	#.../libfreenect/build> make
+	#.../libfreenect/build> sudo make install
+	
+
+*	#.../pix_freenect> make
+
+
+*	have a look at the freenect_audio-help.pd file!
+
+
+_______________
+:::CHANGELOG:::
+
+0.1	
+* first release
+
+ ________________
+:::KNOWN BUGS:::
+
+*	resampling in help file not working correctly
+
+ ________________
+:::THINGS TO DO:::
+
+*	resampling in help file
+
+questions: m.kronlachner@gmail.com
+
