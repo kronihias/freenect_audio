@@ -4,8 +4,7 @@
 # path to pd
 ## change this according to your setup!
 PDROOT=/Users/matthias/Pd-0.42.5-extended/pd
-LIBFREENECT=/home/matthias/libfreenect/include
-LIBSAMPLERATE=/home/matthias/libsamplerate-0.1.8/src
+LIBFREENECT=/Users/matthias/libfreenect/include
 
 
 # here we find the sources of pd (and evtl. the pd.lib)
@@ -70,10 +69,10 @@ LINUXCFLAGS = -DPD -O2 -funroll-loops -fomit-frame-pointer -fPIC \
 
 LINUXLDFLAGS =  -export-dynamic -shared  -lc -lm
 
-LINUXINCLUDE =  -I$(PDSRCDIR) -I$(LIBFREENECT) -I$(LIBSAMPLERATE)
+LINUXINCLUDE =  -I$(PDSRCDIR) -I$(LIBFREENECT)
 
 %.pd_linux: %.c
-	$(CC) $(LINUXLDFLAGS) $(LINUXCFLAGS) $(LINUXINCLUDE) -o $*.pd_linux $*.c -lfreenect -lsamplerate
+	$(CC) $(LINUXLDFLAGS) $(LINUXCFLAGS) $(LINUXINCLUDE) -o $*.pd_linux $*.c -lfreenect
 	strip --strip-unneeded $*.pd_linux
 
 
@@ -83,9 +82,9 @@ LINUXINCLUDE =  -I$(PDSRCDIR) -I$(LIBFREENECT) -I$(LIBSAMPLERATE)
 pd_darwin: $(TARGETS)
 
 DARWINCFLAGS = -DPD -O2 -Wall -W -Wshadow -Wstrict-prototypes \
-    -Wno-unused -Wno-parentheses -Wno-switch -lfreenect -lsamplerate
+    -Wno-unused -Wno-parentheses -Wno-switch -lfreenect
 
-DARWININCLUDE = -I$(PDSRCDIR) -I$(LIBFREENECT) -I$(LIBSAMPLERATE)
+DARWININCLUDE = -I$(PDSRCDIR) -I$(LIBFREENECT)
 
 DARWINLDFLAGS = -bundle -undefined suppress -flat_namespace -arch i386
 

@@ -54,6 +54,7 @@ _______________
 :::KNOWN BUGS:::
 
 *	resampling in help file not working correctly
+*	audio seems to not work under osx
 
  ________________
 :::THINGS TO DO:::

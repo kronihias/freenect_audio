@@ -134,7 +134,7 @@ static void in_callback(freenect_device* dev, int num_samples,
   }
 }
 
-static void freenect_thread_func(void*target) {
+static void *freenect_thread_func(void*target) {
 					 
   t_freenect_audio*x = (t_freenect_audio*) target;
 
@@ -142,7 +142,7 @@ static void freenect_thread_func(void*target) {
   {
 	  // maybe update or something
   }
-  //return 0;
+  return 0;
 }
 
 /*--------------------------------------------------------------------
@@ -204,7 +204,7 @@ static void freenect_audio_free(t_freenect_audio*x){
   freebytes(x->x_buffer4, x->x_bufsize*sizeof(float));
   
   pthread_mutex_destroy(&x->x_mutex);
-  pthread_detach(&x->x_freenect_thread);
+  pthread_detach(x->x_freenect_thread);
   pthread_exit(&x->x_freenect_thread);
   
   freenect_stop_audio(f_dev);
@@ -291,13 +291,14 @@ static void *freenect_audio_new(t_symbol *s,int argc, t_atom *argv){
 	if (ret & (1 << 2))
 	{
 		// AUDIO SUPPORTED -> OK!
+		post ("libfreenect supports FREENECT_DEVICE_AUDIO (%i)", ret);
 	} else {
 		post ("libfreenect doesn't supports FREENECT_DEVICE_AUDIO (%i)", ret);
 		return(NULL);
 	}
 	
 	freenect_select_subdevices(f_ctx, FREENECT_DEVICE_AUDIO);
-
+	
 	int openBySerial=0;
 	int kinect_dev_nr = 0;
 	t_symbol *serial;
@@ -317,8 +318,8 @@ static void *freenect_audio_new(t_symbol *s,int argc, t_atom *argv){
 			openBySerial=1;
 		}
 	}
-	
-	if (openBySerial == 0)
+
+	if (openBySerial != 1)
 	{
 		verbose(1, "trying to open Kinect device nr %i...", (int)kinect_dev_nr);
 		if (freenect_open_device(f_ctx, &f_dev, kinect_dev_nr) < 0) {
@@ -344,7 +345,7 @@ static void *freenect_audio_new(t_symbol *s,int argc, t_atom *argv){
 	freenect_set_audio_in_callback(f_dev, in_callback);
 	
 	if (freenect_start_audio(f_dev) < 0)
-		post("Couldn't start audio transfer\n");
+	post("Couldn't start audio transfer\n");
 	
 	// RESERVE BUFFERS AND SET ZERO
 	x->x_bufsize = FREENECT_BUFFER*16; // 16 kHz Samplingrate Kinect
@@ -374,7 +375,7 @@ static void *freenect_audio_new(t_symbol *s,int argc, t_atom *argv){
 	if (res)
 	{
 	  post("pthread_func failed");
-    }
+  }
   
 	// Generate Outlets
   x->x_out1=outlet_new(&x->x_obj, NULL);
