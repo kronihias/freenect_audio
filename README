@@ -1,7 +1,7 @@
 
 freenect_audio (0.1)
 ======================================
-pure data external to output 4 microphone signals from Kinect sensor via libfreenect.
+pure data external to output 4 microphone signals as list from Kinect sensor via libfreenect.
 outputs samples as four separate lists of floats when sending bang message to freenect_audio.
 
 * depends on libfreenect (v0.1 !!)
@@ -16,7 +16,7 @@ __________________________________________________________
 tested and compiled for Ubuntu 11.10 and MacOS 10.6.8
 
 use binaries from build folder or build yourself
-OSX: make sure that libfreenect.0.0.1.dylib and libusb-1.0.0.dylib provided in build folder are in the same folder than freenect.pd_darwin!
+OSX: make sure that libfreenect.0.0.1.dylib and libusb-1.0.0.dylib provided in build folder are in the same folder than freenect_audio.pd_darwin!
 
 *	get/install pd including src (http://puredata.info)
 
